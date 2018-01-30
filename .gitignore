@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+# Maven
+target/
+
+# User-specific stuff:
+.idea/
+out/
+
+# Javac
+*.class
