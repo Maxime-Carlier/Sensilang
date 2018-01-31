@@ -1,12 +1,16 @@
 package fr.unice.polytech.dsl.sensilang.model.sensor;
 
+import java.util.Random;
+
 public class RandomSensor<T extends Number> extends FunctionalSensor {
 
-    java.util.Random rand = new java.util.Random(System.currentTimeMillis());
+    Random rand = new Random(System.currentTimeMillis());
 
     public RandomSensor(T lower, T upper, Class<T> type) {
         if(type.equals(Integer.class)) {
             function = (Long l) -> rand.nextInt((Integer)upper-(Integer)lower) + (Integer)lower;
+        } else {
+            throw new IllegalArgumentException("Unsuported type " + type.getName());
         }
     }
 
