@@ -13,6 +13,7 @@ class SensilangShell {
 
     SensilangShell() {
         binding = new SensilangBinding()
+        binding.setModel(new SensilangModel(binding))
 
         configuration = getSensilangConfiguration()
         configuration.setScriptBaseClass("fr.unice.polytech.dsl.sensilang.language.SensilangBaseScript")
@@ -57,6 +58,8 @@ class SensilangShell {
     
     void eval(File scriptFile) {
         Script script = shell.parse(scriptFile)
+        binding.setScript(script)
+        script.setBinding(binding)
         script.run()
     }
 }

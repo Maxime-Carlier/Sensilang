@@ -9,6 +9,8 @@ public class RandomSensor<T extends Number> extends FunctionalSensor {
     public RandomSensor(T lower, T upper, Class<T> type) {
         if(type.equals(Integer.class)) {
             function = (Long l) -> rand.nextInt((Integer)upper-(Integer)lower) + (Integer)lower;
+        } else if (type.equals(Float.class)) {
+            function = (Long l) -> rand.nextFloat() * ((Float)upper-(Float)lower) + (Float)lower;
         } else {
             throw new IllegalArgumentException("Unsuported type " + type.getName());
         }
