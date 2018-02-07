@@ -10,16 +10,4 @@ public interface Sensor extends Cloneable {
      * @return The Sensor value
      */
     Number valueAt(long timeStamp);
-
-    /**
-     *
-     * @return the id of the censor
-     */
-    String getId();
-
-    /**
-     * Sets the id of the sensor
-     * @param id
-     */
-    public void setId(String id);
 }
