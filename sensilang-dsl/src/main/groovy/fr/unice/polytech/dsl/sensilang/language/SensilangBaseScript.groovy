@@ -30,7 +30,7 @@ abstract class SensilangBaseScript extends Script{
     def sensorMultiplier(FunctionalSensor sensor) {
         ['clone': { Integer amount ->
             SensilangModel model = ((SensilangBinding) this.getBinding()).getModel()
-            for (int x = 1; x < amount; x++) {
+            for (int x = 0; x < amount; x++) {
                 clone = sensor.clone()
                 clone.setId(clone.getId() + "_" + x)
                 model.addSensor(clone);
