@@ -1,6 +1,7 @@
 package fr.unice.polytech.dsl.sensilang.language
 
 import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionSensor
+import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionalSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.RandomSensor
 
 import java.util.function.Function
@@ -14,6 +15,7 @@ abstract class SensilangBaseScript extends Script{
     def randomSensor(String id, int lower, int upper) {
         RandomSensor<Integer> s = new RandomSensor<>(id, lower, upper, Integer.class)
         ((SensilangBinding) this.getBinding()).getModel().addSensor(s)
+        s
     }
 
     def functionSensor(String id) {
@@ -21,7 +23,17 @@ abstract class SensilangBaseScript extends Script{
             FunctionSensor<Number> s = new FunctionSensor<Number>(id)
             ((SensilangBinding) this.getBinding()).getModel().addSensor(s)
             s.setLaw(function)
+            s
         }]
+    }
+
+    def create(Integer amount, FunctionalSensor sensor) {
+        SensilangModel model = ((SensilangBinding) this.getBinding()).getModel();
+        for (int x = 1; x < amount; x++) {
+            clone = sensor.clone()
+            clone.setId(clone.getId() + "_" + x)
+            model.addSensor(clone);
+        }
     }
 
     def export(long start, long end) {

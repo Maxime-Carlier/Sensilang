@@ -1,0 +1,12 @@
+Function test = { x ->
+    if (x % 2 == 0)
+        0
+    else
+        1
+}
+functionSensor "my_function" with test
+
+random = randomSensor "my-sensor", 0, 10
+create 10, random
+
+export 0, 10

@@ -3,7 +3,7 @@ package fr.unice.polytech.dsl.sensilang.model.sensor;
 /**
  * Common interface for all Sensors
  */
-public interface Sensor {
+public interface Sensor extends Cloneable {
     /**
      * Compute the value for the given POSIX time
      * @param timeStamp The Posix timestamp
@@ -16,4 +16,10 @@ public interface Sensor {
      * @return the id of the censor
      */
     String getId();
+
+    /**
+     * Sets the id of the sensor
+     * @param id
+     */
+    public void setId(String id);
 }
