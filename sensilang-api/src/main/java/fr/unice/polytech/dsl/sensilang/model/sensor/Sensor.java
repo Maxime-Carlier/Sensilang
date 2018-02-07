@@ -10,4 +10,10 @@ public interface Sensor {
      * @return The Sensor value
      */
     Number valueAt(long timeStamp);
+
+    /**
+     *
+     * @return the id of the censor
+     */
+    String getId();
 }

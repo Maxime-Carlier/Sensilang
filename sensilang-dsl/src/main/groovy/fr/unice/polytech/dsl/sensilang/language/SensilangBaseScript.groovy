@@ -1,6 +1,9 @@
 package fr.unice.polytech.dsl.sensilang.language
 
+import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.RandomSensor
+
+import java.util.function.Function
 
 abstract class SensilangBaseScript extends Script{
     // Method mapping declarations goes there
@@ -8,9 +11,17 @@ abstract class SensilangBaseScript extends Script{
         println("Hello " + name)
     }
 
-    def RandomSensor(int lower, int upper) {
-        RandomSensor<Integer> s = new RandomSensor<>(lower, upper, Integer.class)
+    def randomSensor(String id, int lower, int upper) {
+        RandomSensor<Integer> s = new RandomSensor<>(id, lower, upper, Integer.class)
         ((SensilangBinding) this.getBinding()).getModel().addSensor(s)
+    }
+
+    def functionSensor(String id) {
+        ['with': { Function function ->
+            FunctionSensor<Number> s = new FunctionSensor<Number>(id)
+            ((SensilangBinding) this.getBinding()).getModel().addSensor(s)
+            s.setLaw(function)
+        }]
     }
 
     def export(long start, long end) {

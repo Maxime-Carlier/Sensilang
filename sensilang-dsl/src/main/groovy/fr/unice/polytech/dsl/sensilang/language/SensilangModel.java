@@ -20,10 +20,10 @@ class SensilangModel {
     }
 
     public void simulate(long start, long end) {
-        System.out.format("%-5s | %s\n","t","v");
+        System.out.format("%s | %-5s | %s\n","s", "t","v");
         for (long l = start; l < end; l++) {
             for (Sensor s : sensors) {
-                System.out.format("%-5d | %d\n", l, s.valueAt(l));
+                System.out.format("%s | %-5d | %d\n", s.getId(), l, s.valueAt(l));
             }
         }
     }

@@ -8,3 +8,4 @@ out/
 
 # Javac
 *.class
+*.iml

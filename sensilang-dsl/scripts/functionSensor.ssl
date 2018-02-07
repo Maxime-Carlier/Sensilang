@@ -1,0 +1,9 @@
+Function test = { x ->
+    if (x % 2 == 0)
+        0
+    else
+        1
+}
+functionSensor "my_function" with test
+
+export 0, 10

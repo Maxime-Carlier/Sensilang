@@ -6,7 +6,8 @@ public class RandomSensor<T extends Number> extends FunctionalSensor {
 
     Random rand = new Random(System.currentTimeMillis());
 
-    public RandomSensor(T lower, T upper, Class<T> type) {
+    public RandomSensor(String id, T lower, T upper, Class<T> type) {
+        super(id);
         if(type.equals(Integer.class)) {
             function = (Long l) -> rand.nextInt((Integer)upper-(Integer)lower) + (Integer)lower;
         } else if (type.equals(Float.class)) {

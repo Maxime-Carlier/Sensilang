@@ -1,7 +1,11 @@
 package fr.unice.polytech.dsl.sensilang.language
 
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.customizers.CompilationCustomizer
+import org.codehaus.groovy.control.customizers.ImportCustomizer
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
+
+import java.util.function.Function
 
 class SensilangShell {
     private GroovyShell shell
@@ -26,36 +30,37 @@ class SensilangShell {
         // Customize that as needed
         def secure = new SecureASTCustomizer()
         secure.with {
-            //disallow closure creation
-            closuresAllowed = false
-            //disallow method definitions
+            closuresAllowed = true
             methodDefinitionAllowed = true
-            //empty white list => forbid imports
             importsWhitelist = [
-                    'java.lang.*'
+                    'java.lang.*',
+                    'java.util.function.Function'
             ]
             staticImportsWhitelist = []
             staticStarImportsWhitelist = []
-            //language tokens disallowed
-//			tokensBlacklist= []
-            //language tokens allowed
-            tokensWhitelist = []
-            //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList = [
-                    int, Integer, Number, Integer.TYPE, String, Object
+                    int, Integer, Number, Long, String, Object, BigDecimal, Function
             ]
             //classes who are allowed to be receivers of method calls
             receiversClassesWhiteList = [
-                    int, Number, Integer, String, Object
+                    int, Number, Integer, String, Object, Function
             ]
         }
 
         def configuration = new CompilerConfiguration()
         configuration.addCompilationCustomizers(secure)
+        configuration.addCompilationCustomizers(getCompilationCustomizers())
 
         return configuration
     }
-    
+
+    static CompilationCustomizer getCompilationCustomizers() {
+        def importCustomizer = new ImportCustomizer()
+        importCustomizer.addImport 'Function', 'java.util.function.Function'
+
+        importCustomizer
+    }
+
     void eval(File scriptFile) {
         Script script = shell.parse(scriptFile)
         binding.setScript(script)
