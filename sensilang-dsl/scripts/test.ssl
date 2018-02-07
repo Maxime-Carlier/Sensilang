@@ -4,9 +4,8 @@ Function test = { x ->
     else
         1
 }
-functionSensor "my_function" with test
+functionSensor "my_function_sensor" with test clone 5
 
-random = randomSensor "my-sensor", 0, 10
-create 10, random
+randomSensor "my-sensor", 0, 5
 
 export 0, 10
