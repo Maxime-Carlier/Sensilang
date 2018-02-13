@@ -53,4 +53,9 @@ abstract class SensilangBaseScript extends Script{
     def export(long start, long end) {
         ((SensilangBinding) this.getBinding()).getModel().simulate(start, end)
     }
+
+
+    /* MARKOV */
+
+
 }
