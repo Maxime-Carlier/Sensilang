@@ -17,13 +17,31 @@ class SensilangModel {
 
     public void addSensor(AbstractSensor s) {
         this.sensors.add(s);
+        this.binding.setVariable(s.getId(), s);
     }
 
     public void simulate(long start, long end) {
         System.out.format("%s\t | %-5s | %s\n","s", "t","v");
-        for (long l = start; l < end; l++) {
+        for (long l = start; l <= end; l++) {
             for (AbstractSensor s : sensors) {
-                System.out.format("%s\t | %-5d | %d\n", s.getId(), l, s.valueAt(l));
+                if (s.getFinalValue(l) != null) {
+                    System.out.format("%s\t | %-5d | %f\n", s.getId(), l, s.getFinalValue(l).doubleValue());
+                } else {
+                    System.out.format("%s\t | %-5d | N/A\n", s.getId(), l);
+                }
+            }
+        }
+    }
+
+    public void simulate(long start, long end, long increment) {
+        System.out.format("%s\t | %-5s | %s\n","s", "t","v");
+        for (long l = start; l <= end; l+=increment) {
+            for (AbstractSensor s : sensors) {
+                if (s.getFinalValue(l) != null) {
+                    System.out.format("%s\t | %-5d | %f\n", s.getId(), l, s.getFinalValue(l).doubleValue());
+                } else {
+                    System.out.format("%s\t | %-5d | N/A\n", s.getId(), l);
+                }
             }
         }
     }
