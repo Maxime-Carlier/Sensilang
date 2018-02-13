@@ -1,9 +1,11 @@
 package fr.unice.polytech.dsl.sensilang.language
 
+import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionalSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.RandomSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.ReplaySensor
+import fr.unice.polytech.dsl.sensilang.model.sensor.mutators.NoiseMutator
 
 import java.util.function.Function
 
@@ -50,12 +52,19 @@ abstract class SensilangBaseScript extends Script{
         }]
     }
 
+    def addNoise(double noiseIntensity, String... sensors) {
+        NoiseMutator noiseMutator = new NoiseMutator(noiseIntensity)
+        for (String s : sensors) {
+            AbstractSensor theSensor = (AbstractSensor)((SensilangBinding) this.getBinding()).getVariable(s)
+            theSensor.setMutator(noiseMutator)
+        }
+    }
+
     def export(long start, long end) {
         ((SensilangBinding) this.getBinding()).getModel().simulate(start, end)
     }
 
-
-    /* MARKOV */
-
-
+    def export(long start, long end, long increment) {
+        ((SensilangBinding) this.getBinding()).getModel().simulate(start, end, increment)
+    }
 }

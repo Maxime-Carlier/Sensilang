@@ -19,8 +19,12 @@ public class NoiseMutator implements Mutator{
 
     @Override
     public Number mutate(Number n) {
-        double lower = (1 - range) * n.doubleValue();
-        double upper = (1 + range) * n.doubleValue();
-        return rand.nextDouble() * (upper-lower) + lower;
+        if(n!=null) {
+            double lower = (1 - range) * n.doubleValue();
+            double upper = (1 + range) * n.doubleValue();
+            return rand.nextDouble() * (upper - lower) + lower;
+        } else {
+            return null;
+        }
     }
 }
