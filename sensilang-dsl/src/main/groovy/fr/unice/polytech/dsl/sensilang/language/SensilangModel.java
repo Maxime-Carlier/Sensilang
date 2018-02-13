@@ -1,7 +1,6 @@
 package fr.unice.polytech.dsl.sensilang.language;
 
 import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor;
-import fr.unice.polytech.dsl.sensilang.model.sensor.Sensor;
 import groovy.lang.Binding;
 
 import java.util.ArrayList;
