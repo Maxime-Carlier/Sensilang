@@ -8,10 +8,12 @@ import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor;
 public class MarkovSensor extends AbstractSensor {
 
     private MarkovChain markovChain;
+    private long previousTimestamp;
 
     public MarkovSensor(String id) {
         super(id);
         this.markovChain = new MarkovChain();
+        this.previousTimestamp = 0;
     }
 
     public void init() {
@@ -33,8 +35,9 @@ public class MarkovSensor extends AbstractSensor {
     @Override
     protected Number valueAt(long timeStamp) {
         State res = null;
-        for (long i = 0; i < timeStamp; i++) {
+        for (long i = this.previousTimestamp; i < timeStamp; i++) {
             res = this.markovChain.iterate();
+            // TODO: verify the number of value produced (0 to 49 or 0 to 50 or...)
         }
         return res.getValue();
     }
