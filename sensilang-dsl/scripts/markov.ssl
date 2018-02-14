@@ -2,9 +2,12 @@ markovSensor "my-markov" with
     markovSensor state 0 "zero" 0.01
     markovSensor state 1 "un" 38.64
     markovSensor state 2 "deux" 1.23
+    markovSensor init
     markovSensor transition 0 1 0.2
     markovSensor transition 1 0 0.8
     markovSensor transition 1 2 0.1
     markovSensor transition 0 2 0.4
+    markovSensor start
 
+export
 

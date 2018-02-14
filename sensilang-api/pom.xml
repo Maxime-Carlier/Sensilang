@@ -22,6 +22,14 @@
             <version>1.5</version>
         </dependency>
 
+        <!-- Output table to console -->
+        <dependency>
+            <groupId>com.massisframework</groupId>
+            <artifactId>j-text-utils</artifactId>
+            <version>0.3.4</version>
+        </dependency>
+
+
         <!-- Classical JUnit -->
         <dependency>
             <groupId>junit</groupId>

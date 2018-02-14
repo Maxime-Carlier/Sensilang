@@ -1,5 +1,6 @@
 package fr.unice.polytech.dsl.sensilang.language;
 
+import dnl.utils.text.table.TextTable;
 import fr.unice.polytech.dsl.sensilang.main.SaveToInflux;
 import fr.unice.polytech.dsl.sensilang.main.SensilangPoint;
 import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor;
@@ -48,15 +49,29 @@ class SensilangModel {
     }
 
     public List<SensilangPoint> simulate(long start, long end, long increment) {
-        System.out.format("%s\t | %-5s | %s\n","s", "t","v");
         List<SensilangPoint> points = compute(start, end, increment);
+        List<Object[]> rows = new ArrayList<>();
+        String[] headers = new String[sensors.size() + 1];
+        headers[0] = "Time";
+        for(int i=0;i<sensors.size();i++) {
+            headers[i + 1] = sensors.get(i).getId();
+        }
         points.forEach(sensilangPoint -> {
-            if (sensilangPoint.getValue().intValue() == -1) {
-                System.out.format("%s\t | %-5d | N/A\n", sensilangPoint.getSensor(), sensilangPoint.getTime());
-            } else {
-                System.out.format("%s\t | %-5d | %f\n", sensilangPoint.getSensor(), sensilangPoint.getTime(), sensilangPoint.getValue());
+            Object[] row = new Object[sensors.size() + 1];
+            row[0] = String.valueOf(sensilangPoint.getTime());
+            for(int i=0; i<sensors.size();i++) {
+                if (sensilangPoint.getValue().intValue() != -1) {
+                    row[i + 1] = String.valueOf(sensilangPoint.getValue().doubleValue());
+                } else {
+                    row[i + 1] = "N/A";
+                }
             }
+            rows.add(row);
         });
+        Object[][] data = new Object[rows.size()][];
+        data = rows.toArray(data);
+        TextTable tt = new TextTable(headers, data);
+        tt.printTable();
         return points;
     }
 }
