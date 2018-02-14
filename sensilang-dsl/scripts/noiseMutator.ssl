@@ -1,6 +1,6 @@
-replaySensor "replaySensor_noNoise",Integer.class forFile "./sensilang-api/src/main/resources/Bike1.csv" asCrossedCSV 10
-replaySensor "replaySensor_yeNoise",Integer forFile "./sensilang-api/src/main/resources/Bike1.csv" asCrossedCSV 11
+replaySensor "replaySensor",Integer.class forFile "./sensilang-api/src/main/resources/Bike1.csv" asCrossedCSV 10
+replaySensor "replaySensor_noise",Integer forFile "./sensilang-api/src/main/resources/Bike1.csv" asCrossedCSV 11
 
-addNoise 0.1,"replaySensor_yeNoise"
+addNoise 0.1,"replaySensor_noise"
 
 export 0,300,50

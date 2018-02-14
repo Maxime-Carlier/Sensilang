@@ -1,9 +1,11 @@
 package fr.unice.polytech.dsl.sensilang.language;
 
+import dnl.utils.text.table.TextTable;
 import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor;
 import groovy.lang.Binding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class SensilangModel {
     private Binding binding;
@@ -21,28 +23,54 @@ class SensilangModel {
     }
 
     public void simulate(long start, long end) {
-        System.out.format("%s\t | %-5s | %s\n","s", "t","v");
+        List<Object[]> rows = new ArrayList<>();
+        String[] headers = new String[sensors.size() + 1];
+        headers[0] = "Time";
+        for(int i=0;i<sensors.size();i++) {
+            headers[i + 1] = sensors.get(i).getId();
+        }
+
         for (long l = start; l <= end; l++) {
-            for (AbstractSensor s : sensors) {
-                if (s.getFinalValue(l) != null) {
-                    System.out.format("%s\t | %-5d | %f\n", s.getId(), l, s.getFinalValue(l).doubleValue());
+            Object[] row = new Object[sensors.size() + 1];
+            row[0] = String.valueOf(l);
+            for(int i=0; i<sensors.size();i++) {
+                if (sensors.get(i).getFinalValue(l) != null) {
+                    row[i + 1] = String.valueOf(sensors.get(i).getFinalValue(l).doubleValue());
                 } else {
-                    System.out.format("%s\t | %-5d | N/A\n", s.getId(), l);
+                    row[i + 1] = "N/A";
                 }
             }
+            rows.add(row);
         }
+        Object[][] data = new Object[rows.size()][];
+        data = rows.toArray(data);
+        TextTable tt = new TextTable(headers, data);
+        tt.printTable();
     }
 
     public void simulate(long start, long end, long increment) {
-        System.out.format("%s\t | %-5s | %s\n","s", "t","v");
+        List<Object[]> rows = new ArrayList<>();
+        String[] headers = new String[sensors.size() + 1];
+        headers[0] = "Time";
+        for(int i=0;i<sensors.size();i++) {
+            headers[i + 1] = sensors.get(i).getId();
+        }
+
         for (long l = start; l <= end; l+=increment) {
-            for (AbstractSensor s : sensors) {
-                if (s.getFinalValue(l) != null) {
-                    System.out.format("%s\t | %-5d | %f\n", s.getId(), l, s.getFinalValue(l).doubleValue());
+            Object[] row = new Object[sensors.size() + 1];
+            row[0] = String.valueOf(l);
+            for(int i=0; i<sensors.size();i++) {
+                if (sensors.get(i).getFinalValue(l) != null) {
+                    row[i + 1] = String.valueOf(sensors.get(i).getFinalValue(l).doubleValue());
                 } else {
-                    System.out.format("%s\t | %-5d | N/A\n", s.getId(), l);
+                    row[i + 1] = "N/A";
                 }
             }
+            rows.add(row);
         }
+        Object[][] data = new Object[rows.size()][];
+        data = rows.toArray(data);
+        TextTable tt = new TextTable(headers, data);
+        tt.printTable();
     }
 }
