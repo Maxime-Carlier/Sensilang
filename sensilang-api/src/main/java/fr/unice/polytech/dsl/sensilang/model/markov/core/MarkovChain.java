@@ -62,16 +62,20 @@ public class MarkovChain {
         logger.log(Level.INFO, "Matrix filled: " + Arrays.deepToString(this.markov.getMatrix().getMatrix()));
     }
 
-    public void iterate() {
+    public State iterate() {
         logger.log(Level.INFO, "Markov iteration...");
+        State result;
         if (this.markov.hasNext()) {
             int stateIndex = this.markov.next();
-            State result = this.stateMap.get(stateIndex);
+            result = this.stateMap.get(stateIndex);
             logger.log(Level.INFO, "Result: " + result);
         }
         else {
             logger.log(Level.WARNING, "Cannot iterate, hasNext is false.");
+            throw new IndexOutOfBoundsException("Cannot iterate, hasNext is false.");
         }
+
+        return result;
     }
 
 }

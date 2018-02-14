@@ -10,7 +10,7 @@ public final class Main {
         if (args.length > 0) {
             shell.eval(new File(args[0]));
         } else {
-            System.out.println("Un argument peut être ? ça peut aider pour faire des choses...");
+            System.out.println("Un argument peut être ? Ca peut aider pour faire des choses...");
         }
     }
 }
