@@ -63,12 +63,11 @@ public class MarkovChain {
     }
 
     public State iterate() {
-        logger.log(Level.INFO, "Markov iteration...");
         State result;
         if (this.markov.hasNext()) {
             int stateIndex = this.markov.next();
             result = this.stateMap.get(stateIndex);
-            logger.log(Level.INFO, "Result: " + result);
+            logger.log(Level.INFO, result.toString());
         }
         else {
             logger.log(Level.WARNING, "Cannot iterate, hasNext is false.");

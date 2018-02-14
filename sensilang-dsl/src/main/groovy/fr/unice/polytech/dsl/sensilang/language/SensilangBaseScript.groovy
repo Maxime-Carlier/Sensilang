@@ -1,11 +1,10 @@
 package fr.unice.polytech.dsl.sensilang.language
 
 import fr.unice.polytech.dsl.sensilang.main.SensilangPoint
-import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor
-import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionSensor
-import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionalSensor
-import fr.unice.polytech.dsl.sensilang.model.sensor.RandomSensor
-import fr.unice.polytech.dsl.sensilang.model.sensor.ReplaySensor
+import fr.unice.polytech.dsl.sensilang.model.markov.MarkovSensor
+import fr.unice.polytech.dsl.sensilang.model.markov.core.assets.State
+import fr.unice.polytech.dsl.sensilang.model.markov.core.assets.Transition
+import fr.unice.polytech.dsl.sensilang.model.sensor.*
 import fr.unice.polytech.dsl.sensilang.model.sensor.mutators.NoiseMutator
 
 import java.util.function.Function
@@ -29,6 +28,17 @@ abstract class SensilangBaseScript extends Script{
             s.setLaw(function)
             sensorMultiplier(s)
         }]
+    }
+
+    def markovSensor(String id) {
+        MarkovSensor sensor = new MarkovSensor(id)
+        State state
+        Transition transition
+        ['with': {
+            ['state': {
+            }]
+        }]
+        ((SensilangBinding) this.getBinding()).getModel().addSensor(sensor)
     }
 
     def sensorMultiplier(FunctionalSensor sensor) {

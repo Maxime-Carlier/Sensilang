@@ -13,7 +13,7 @@ public class MarkovSensor extends AbstractSensor {
     public MarkovSensor(String id) {
         super(id);
         this.markovChain = new MarkovChain();
-        this.previousTimestamp = 0;
+        this.previousTimestamp = -1;
     }
 
     public void init() {
