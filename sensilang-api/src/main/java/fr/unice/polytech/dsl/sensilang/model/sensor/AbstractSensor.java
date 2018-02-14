@@ -2,7 +2,7 @@ package fr.unice.polytech.dsl.sensilang.model.sensor;
 
 import fr.unice.polytech.dsl.sensilang.model.sensor.mutators.Mutator;
 
-public abstract class AbstractSensor {
+public abstract class AbstractSensor implements Cloneable {
     private String id;
     private Mutator mutator;
 
@@ -30,5 +30,16 @@ public abstract class AbstractSensor {
 
     public void setMutator(Mutator mutator) {
         this.mutator = mutator;
+    }
+
+    @Override
+    protected AbstractSensor clone() {
+        try {
+            return (AbstractSensor) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // TODO add logger
+            e.printStackTrace();
+            return this;
+        }
     }
 }

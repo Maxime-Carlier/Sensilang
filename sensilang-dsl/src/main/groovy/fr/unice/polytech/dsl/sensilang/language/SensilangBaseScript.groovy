@@ -1,5 +1,6 @@
 package fr.unice.polytech.dsl.sensilang.language
 
+import fr.unice.polytech.dsl.sensilang.main.SensilangPoint
 import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionSensor
 import fr.unice.polytech.dsl.sensilang.model.sensor.FunctionalSensor
@@ -66,5 +67,9 @@ abstract class SensilangBaseScript extends Script{
 
     def export(long start, long end, long increment) {
         ((SensilangBinding) this.getBinding()).getModel().simulate(start, end, increment)
+    }
+
+    def save(List<SensilangPoint> points) {
+        ((SensilangBinding) this.getBinding()).getModel().save(points)
     }
 }
