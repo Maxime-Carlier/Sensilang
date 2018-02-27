@@ -3,6 +3,7 @@ package fr.unice.polytech.dsl.sensilang.language;
 import dnl.utils.text.table.TextTable;
 import fr.unice.polytech.dsl.sensilang.main.SaveToInflux;
 import fr.unice.polytech.dsl.sensilang.main.SensilangPoint;
+import fr.unice.polytech.dsl.sensilang.model.markov.MarkovSensor;
 import fr.unice.polytech.dsl.sensilang.model.sensor.AbstractSensor;
 import groovy.lang.Binding;
 
@@ -22,6 +23,21 @@ class SensilangModel {
     public void addSensor(AbstractSensor s) {
         this.sensors.add(s);
         this.binding.setVariable(s.getId(), s);
+    }
+
+    public MarkovSensor getMarkovSensor(String id) {
+        for (AbstractSensor s : this.sensors) {
+            if (s.getId().equals(id)){
+                try{
+                    return (MarkovSensor) s;
+                }
+                catch (ClassCastException e) {
+                    System.err.println("Wrong sensor ID. Doens't lead to a Markovian sensor.");
+                }
+            }
+        }
+
+        return null;
     }
 
     public void save(List<SensilangPoint> points) {

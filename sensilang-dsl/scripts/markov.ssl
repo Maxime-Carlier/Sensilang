@@ -1,13 +1,13 @@
-markovSensor "my-markov" with
-    state 0 "zero" 0.01
-    state 1 "un" 38.64
-    state 2 "deux" 1.23
-    init
-    transition 0 1 0.2
-    transition 1 0 0.8
-    transition 1 2 0.1
-    transition 0 2 0.4
-    start
+markovSensor "my-markov"
+markovState "my-markov" add 0, "zero", 0.01
+markovState "my-markov" add 1, "un", 38.64
+markovState "my-markov" add 2, "deux", 1.23
+markovInit "my-markov"
+markovTransition "my-markov" add 0, 1, 0.2
+markovTransition "my-markov" add 1, 0, 0.8
+markovTransition "my-markov" add 1, 2, 0.1
+markovTransition "my-markov" add 0, 2, 0.4
+markovStart "my-markov"
 
 export 0, 20
 

@@ -9,7 +9,7 @@ import fr.unice.polytech.dsl.sensilang.model.sensor.mutators.NoiseMutator
 
 import java.util.function.Function
 
-abstract class SensilangBaseScript extends Script{
+abstract class SensilangBaseScript extends Script {
     // Method mapping declarations goes there
     def sayHello(String name) {
         println("Hello " + name)
@@ -30,16 +30,49 @@ abstract class SensilangBaseScript extends Script{
         }]
     }
 
+    /* MARKOV */
     def markovSensor(String id) {
         MarkovSensor sensor = new MarkovSensor(id)
-        State state
-        Transition transition
-        ['with': {
-            ['state': {
-            }]
-        }]
         ((SensilangBinding) this.getBinding()).getModel().addSensor(sensor)
     }
+
+    def markovState(String id) {
+        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id);
+        State state
+        [add: { int stateId, String stateName, double stateValue ->
+            state = new State(stateId, stateName, stateValue)
+            sensor.state(state)
+        }]
+        /*}
+        catch (NullPointerException e) {
+            System.err.println("Wrong id, that sensor doesn't exist.");
+        }*/
+    }
+
+    def markovTransition(String id) {
+        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id);
+        Transition transition
+        [add: { int initialStateId, int finalStateId, double probability ->
+            transition = new Transition(initialStateId, finalStateId, probability)
+            sensor.transition(transition)
+        }]
+        /*}
+        catch (NullPointerException e) {
+            System.err.println("Wrong id, that sensor doesn't exist.");
+        }*/
+    }
+
+
+    def markovInit(String id) {
+        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
+        sensor.init()
+    }
+
+    def markovStart(String id) {
+        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
+        sensor.start()
+    }
+
 
     def sensorMultiplier(FunctionalSensor sensor) {
         ['clone': { Integer amount ->
@@ -54,9 +87,9 @@ abstract class SensilangBaseScript extends Script{
 
     def replaySensor(String id, Class<? extends Number> type) {
         ReplaySensor<? extends Number> replaySensor = new ReplaySensor<>(id, type)
-        [forFile : { String pathToFile ->
+        [forFile: { String pathToFile ->
             replaySensor.withLocalFile(pathToFile)
-            [asCrossedCSV : {int columnIndex ->
+            [asCrossedCSV: { int columnIndex ->
                 replaySensor.asCrossedCsv(columnIndex)
                 ((SensilangBinding) this.getBinding()).getModel().addSensor(replaySensor)
             }]
@@ -66,7 +99,7 @@ abstract class SensilangBaseScript extends Script{
     def addNoise(double noiseIntensity, String... sensors) {
         NoiseMutator noiseMutator = new NoiseMutator(noiseIntensity)
         for (String s : sensors) {
-            AbstractSensor theSensor = (AbstractSensor)((SensilangBinding) this.getBinding()).getVariable(s)
+            AbstractSensor theSensor = (AbstractSensor) ((SensilangBinding) this.getBinding()).getVariable(s)
             theSensor.setMutator(noiseMutator)
         }
     }
