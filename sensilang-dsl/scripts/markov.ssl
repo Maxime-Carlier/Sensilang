@@ -11,5 +11,5 @@ markovTransition "my-markov" add 2, 0, 0.3
 markovTransition "my-markov" toz
 markovStart "my-markov"
 
-export 0, 20
+simulate 0, 20
 

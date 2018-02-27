@@ -3,4 +3,4 @@ replaySensor "replaySensor_noise",Integer forFile "./sensilang-api/src/main/reso
 
 addNoise 0.1,"replaySensor_noise"
 
-export 0,300,50
+simulate 0,300,50

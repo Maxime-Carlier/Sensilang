@@ -10,13 +10,16 @@ import org.apache.commons.math3.analysis.interpolation.UnivariateInterpolator;
 
 public class Main {
     public static void main(String[] args) {
-        double x[] = {0.0, 1.0, 2.0};
-        double y[] = {1.0, -1.0, 2.0};
+        AbstractSensor s1 = new ReplaySensor<>("replay_sensor1", Integer.class)
+                .withLocalFile("sensilang-api/src/main/resources/Bike1.csv")
+                .asCrossedCsv(10);
 
-        UnivariateInterpolator interpolator = new SplineInterpolator();
-        UnivariateFunction function = interpolator.interpolate(x, y);
+        Mutator noiseMutator = new NoiseMutator(0.1);
 
+        s1.setMutator(noiseMutator);
 
-
+        for(int i=0; i<=1000; i+=100) {
+            System.out.println(s1.getFinalValue(i));
+        }
     }
 }
