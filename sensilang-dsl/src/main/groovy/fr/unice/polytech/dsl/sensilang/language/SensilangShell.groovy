@@ -21,7 +21,7 @@ class SensilangShell {
 
         configuration = getSensilangConfiguration()
         configuration.setScriptBaseClass("fr.unice.polytech.dsl.sensilang.language.SensilangBaseScript")
-        // TODO might want to get that as from the Java API instead of an hardcoded string
+        // TODO: might want to get that as from the Java API instead of an hardcoded string
 
         shell = new GroovyShell(configuration)
     }

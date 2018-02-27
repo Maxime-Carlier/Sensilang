@@ -4,9 +4,11 @@ markovState "my-markov" add 1, "un", 38.64
 markovState "my-markov" add 2, "deux", 1.23
 markovInit "my-markov"
 markovTransition "my-markov" add 0, 1, 0.2
-markovTransition "my-markov" add 1, 0, 0.8
-markovTransition "my-markov" add 1, 2, 0.1
+markovTransition "my-markov" add 1, 0, 0.3
+markovTransition "my-markov" add 1, 2, 0.4
 markovTransition "my-markov" add 0, 2, 0.4
+markovTransition "my-markov" add 2, 0, 0.3
+markovTransition "my-markov" toz
 markovStart "my-markov"
 
 export 0, 20

@@ -12,7 +12,6 @@ public class MarkovMatrix {
 
     public MarkovMatrix(int size) {
         this.matrix = new double[size][size];
-        // TODO: test if filled with zeros, technically it is
         this.size = size;
     }
 

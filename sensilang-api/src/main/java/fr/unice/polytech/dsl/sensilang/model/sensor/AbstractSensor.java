@@ -37,7 +37,7 @@ public abstract class AbstractSensor implements Cloneable {
         try {
             return (AbstractSensor) super.clone();
         } catch (CloneNotSupportedException e) {
-            // TODO add logger
+            // TODO: add valuablelogger
             e.printStackTrace();
             return this;
         }

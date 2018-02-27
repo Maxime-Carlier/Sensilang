@@ -37,7 +37,6 @@ public class MarkovSensor extends AbstractSensor {
         State res = null;
         for (long i = this.previousTimestamp; i < timeStamp; i++) {
             res = this.markovChain.iterate();
-            // TODO: verify the number of value produced (0 to 49 or 0 to 50 or...)
         }
         return res.getValue();
     }

@@ -14,7 +14,6 @@ public class State {
         this.value = value;
     }
 
-    //TODO clean before handing-in
     public State(int index, String state) {
         this.state = state;
         this.index = index;
