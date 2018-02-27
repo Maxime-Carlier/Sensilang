@@ -31,45 +31,48 @@ abstract class SensilangBaseScript extends Script {
     }
 
     /* MARKOV */
+
     def markovSensor(String id) {
         MarkovSensor sensor = new MarkovSensor(id)
         ((SensilangBinding) this.getBinding()).getModel().addSensor(sensor)
     }
 
     def markovState(String id) {
-        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id);
-        State state
-        [add: { int stateId, String stateName, double stateValue ->
-            state = new State(stateId, stateName, stateValue)
-            sensor.state(state)
-        }]
-        /*}
+        try {
+            MarkovSensor sensor = ((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
+            State state
+            [add: { int stateId, String stateName, double stateValue ->
+                state = new State(stateId, stateName, stateValue)
+                sensor.state(state)
+            }]
+        }
         catch (NullPointerException e) {
-            System.err.println("Wrong id, that sensor doesn't exist.");
-        }*/
+            System.err.println("Wrong id, that markovian sensor doesn't exist.");
+        }
     }
 
     def markovTransition(String id) {
-        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id);
-        Transition transition
-        [add: { int initialStateId, int finalStateId, double probability ->
-            transition = new Transition(initialStateId, finalStateId, probability)
-            sensor.transition(transition)
-        }]
-        /*}
-        catch (NullPointerException e) {
-            System.err.println("Wrong id, that sensor doesn't exist.");
-        }*/
+        try {
+            MarkovSensor sensor = ((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id);
+            Transition transition
+            [add: { int initialStateId, int finalStateId, double probability ->
+                transition = new Transition(initialStateId, finalStateId, probability)
+                sensor.transition(transition)
+            }]
+        }
+        catch (Exception e) {
+            System.err.println("Wrong id, that markovian sensor doesn't exist.");
+        }
     }
 
 
     def markovInit(String id) {
-        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
+        MarkovSensor sensor = ((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
         sensor.init()
     }
 
     def markovStart(String id) {
-        MarkovSensor sensor =((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
+        MarkovSensor sensor = ((SensilangBinding) this.getBinding()).getModel().getMarkovSensor(id)
         sensor.start()
     }
 
