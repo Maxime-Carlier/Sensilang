@@ -60,34 +60,33 @@ class SensilangModel {
         return points;
     }
 
-    public List<SensilangPoint> simulate(long start, long end) {
-        return simulate(start, end, 1);
+    public void simulate(long start, long end) {
+        simulate(start, end, 1);
     }
 
-    public List<SensilangPoint> simulate(long start, long end, long increment) {
-        List<SensilangPoint> points = compute(start, end, increment);
+    public void simulate(long start, long end, long increment) {
         List<Object[]> rows = new ArrayList<>();
         String[] headers = new String[sensors.size() + 1];
         headers[0] = "Time";
         for(int i=0;i<sensors.size();i++) {
             headers[i + 1] = sensors.get(i).getId();
         }
-        points.forEach(sensilangPoint -> {
+
+        for (long l = start; l <= end; l+=increment) {
             Object[] row = new Object[sensors.size() + 1];
-            row[0] = String.valueOf(sensilangPoint.getTime());
+            row[0] = String.valueOf(l);
             for(int i=0; i<sensors.size();i++) {
-                if (sensilangPoint.getValue().intValue() != -1) {
-                    row[i + 1] = String.valueOf(sensilangPoint.getValue().doubleValue());
+                if (sensors.get(i).getFinalValue(l) != null) {
+                    row[i + 1] = String.valueOf(sensors.get(i).getFinalValue(l).doubleValue());
                 } else {
                     row[i + 1] = "N/A";
                 }
             }
             rows.add(row);
-        });
+        }
         Object[][] data = new Object[rows.size()][];
         data = rows.toArray(data);
         TextTable tt = new TextTable(headers, data);
         tt.printTable();
-        return points;
     }
 }

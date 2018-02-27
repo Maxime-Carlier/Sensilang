@@ -6,4 +6,4 @@ Function test = { x ->
 }
 functionSensor "my_function" with test
 
-export 0, 10
+simulate 0, 10

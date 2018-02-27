@@ -107,12 +107,20 @@ abstract class SensilangBaseScript extends Script {
         }
     }
 
-    def export(long start, long end) {
+    def simulate(long start, long end) {
         ((SensilangBinding) this.getBinding()).getModel().simulate(start, end)
     }
 
-    def export(long start, long end, long increment) {
+    def simulate(long start, long end, long increment) {
         ((SensilangBinding) this.getBinding()).getModel().simulate(start, end, increment)
+    }
+
+    def export(long start, long end) {
+        ((SensilangBinding) this.getBinding()).getModel().compute(start, end, 1)
+    }
+
+    def export(long start, long end, long increment) {
+        ((SensilangBinding) this.getBinding()).getModel().compute(start, end, increment)
     }
 
     def save(List<SensilangPoint> points) {
