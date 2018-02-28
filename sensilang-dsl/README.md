@@ -21,3 +21,8 @@ Compile the project then execute the following command while being inside the `t
 ```bash
 java -jar sensilang-jar-with-dependencies.jar ../scripts/sayHello.ssl
 ```
+
+### Running several example
+copy the built jar to the `sensilang-dsl/scenario` repository
+cd inside it
+then run `java -jar sensilang-jar-with-dependencies.jar ./demo1.ssl`

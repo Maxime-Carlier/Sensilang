@@ -1,0 +1,35 @@
+// Creating a lot of sensors
+Function one = {x ->
+    if(x<250 || x>750) 0
+    else 2*x
+}
+
+Function two = { x->
+    if(x<250 || x>750) 2*x
+    else 0
+}
+
+functionSensor "sensor1" with one
+functionSensor "sensor2" with two
+
+markovSensor "my-markov"
+markovState "my-markov" add 0, "zero", 0.01
+markovState "my-markov" add 1, "un", 38.64
+markovState "my-markov" add 2, "deux", 1.23
+markovInit "my-markov"
+markovTransition "my-markov" add 0, 1, 0.2
+markovTransition "my-markov" add 1, 0, 0.3
+markovTransition "my-markov" add 1, 2, 0.4
+markovTransition "my-markov" add 0, 2, 0.4
+markovTransition "my-markov" add 2, 0, 0.3
+markovTransition "my-markov" toz
+markovStart "my-markov"
+
+replaySensor "replaySensor",Integer.class forFile "./Bike1.csv" asCrossedCSV 10
+replaySensor "replaySensor_noise",Integer forFile "./Bike1.csv" asCrossedCSV 10
+
+randomSensor "my-sensor", 0, 10
+
+addNoise 0.1,"replaySensor_noise"
+
+simulate 0,1000,100
